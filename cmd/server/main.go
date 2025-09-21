@@ -1,22 +1,18 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"net/http"
+
+	"github.com/ElizCarvalho/fc-pos-golang-client-server-api/internal/server"
 )
 
 func main() {
-	http.HandleFunc("/healthcheck", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("I am alive! Let's go!"))
-	})
+	srv, err := server.NewServer()
+	if err != nil {
+		log.Fatal("Error creating server: ", err)
+	}
+	defer srv.Close()
 
-	http.HandleFunc("/quote", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Hello! This is the /quote endpoint"))
-	})
-
-	fmt.Println("Server is running on port 9090")
-	log.Fatal(http.ListenAndServe(":9090", nil))
+	srv.SetupRoutes()
+	log.Fatal(srv.Start("8080"))
 }
