@@ -1,0 +1,19 @@
+# Binários
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Arquivos de banco
+*.db
+*.sqlite
+
+# Arquivos de cotação
+cotacao.txt
+
+# Logs
+*.log
+
+# Arquivos de sistema
+.DS_Store
