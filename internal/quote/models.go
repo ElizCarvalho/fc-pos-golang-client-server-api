@@ -17,14 +17,16 @@ func ParseBid(bidString string) (float64, error) {
 	if err != nil {
 		return 0, errors.New("invalid bid format")
 	}
-	if bidConverted < 0 {
-		return 0, errors.New("bid cannot be negative")
+
+	if err := ValidateBid(bidConverted); err != nil {
+		return 0, err
 	}
+
 	return bidConverted, nil
 }
 
-func (q *Quote) Validate() error {
-	if q.Bid <= 0 {
+func ValidateBid(bid float64) error {
+	if bid < 0 {
 		return errors.New("bid cannot be negative")
 	}
 	return nil
